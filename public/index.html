@@ -9,33 +9,7 @@
   </head>
   <body>
     <noscript> You need JavaScript to run this application </noscript>
-    <div id="root">
-      <div id="app-container">
-        <div class="edit-form-container">
-          <h1>Create Todo</h1>
-          <div class="editor-form">
-            <form>
-              <div class="form-row-left">
-                <input type="text" name="todo-text" id="todo-text" />
-              </div>
-              <div class="form-row-right">
-                <input type="button" id="add-todo-button" value="Add" />
-                <input type="button" id="clear-form-button" value="Clear" />
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="todo-list-container">
-          <h1>My ToDos</h1>
-          <h2 id="todo-counter">Total Todo Count: 0</h2>
-          <div class="list-filter-container">Filter</div>
-          <div class="todo-list" id="todo-list">
-            <div class="empty-list">
-              Nothing to do
-            </div>
-        </div>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module">
       import { startApplication } from "../src/main.js";
 

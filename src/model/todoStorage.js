@@ -19,6 +19,18 @@ class TodoStorage {
     return this.todoCount;
   }
 
+  getTodoById(id) {
+    const todo = this.storage[id];
+    return {
+      id,
+      text: todo.text,
+      state: todo.state,
+      dateCreated: new Date(todo.dateCreated),
+      dateCompleted:
+        todo.dateCompleted !== null ? new Date(todo.dateCompleted) : null,
+    };
+  }
+
   postponeById(id) {
     const todo = this.storage[id];
     todo.postpone();

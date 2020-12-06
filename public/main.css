@@ -81,6 +81,7 @@ body {
   margin-bottom: 10px;
 }
 
+
 .item > h3 {
   padding: 10px;
   font-weight: 400;
@@ -213,4 +214,21 @@ body {
 .done-button:hover {
   background-color: rgb(0, 174, 255);
   box-shadow: 2px 0px 5px 4px rgb(0, 174, 255);
+}
+
+.back-to-list-button {
+  width: 125px;
+  font-weight: 700;
+  margin-left: 10px;
+  padding: 9px;
+  border-radius: 10px;
+  border: none;
+  color: rgb(20, 20, 20);
+  background-color: greenyellow;
+  cursor: pointer;
+}
+
+.back-to-list-button:hover {
+  background-color: greenyellow;
+  box-shadow: 2px 0px 5px 4px greenyellow;
 }
