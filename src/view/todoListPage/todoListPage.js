@@ -73,11 +73,20 @@ function renderTodoTotal(doc, totalCount) {
   return h2;
 }
 
-function renderFilter(doc) {
-  const filterDiv = createElement(doc, "div", "list-filter-container");
-  filterDiv.innerHTML = "Filter";
+function renderStatPage(doc) {
+  const statDiv = createElement(doc, "div", "list-filter-container");
 
-  return filterDiv;
+  const statLink = createElement(doc, "a");
+
+  statLink.id = "stat-link";
+  statLink.href = "#";
+  statLink.innerHTML = "Show statistics";
+
+  statLink.addEventListener("click", (e) => e.preventDefault());
+
+  statDiv.append(statLink);
+
+  return statDiv;
 }
 
 function renderEmptyPlaceholder(doc) {
@@ -108,7 +117,7 @@ function renderTodoListContent(doc, allTodo) {
   listContainer.append(renderTitle(doc, "My ToDos"));
 
   listContainer.append(renderTodoTotal(doc, allTodo.length));
-  listContainer.append(renderFilter(doc));
+  listContainer.append(renderStatPage(doc));
   listContainer.append(renderTodoList(doc, allTodo));
 
   return listContainer;

@@ -2,7 +2,7 @@ import { getTodoInput } from "../helpers.js";
 
 import todoStorage from "../model/todoStorage.js";
 import renderTodoList from "../view/todoListPage/todoList.js";
-import renderTodoPage from "../view/todoPage/todoPage.js";
+import configureRouter from "../routerConfig.js";
 
 function addTodoHandler(doc) {
   console.log("Add button clicked");
@@ -33,10 +33,17 @@ function updateTodoList(doc) {
   renderTodoList(doc, allTodo);
 }
 
-function renderTodo(doc, event) {
+function navigateToTodo(doc, event) {
   const todoId = event.detail.todoId;
   console.log(`Rendering todo screen for todo: ${todoId}`);
-  renderTodoPage(doc, todoStorage.getTodoById(todoId));
+  const router = configureRouter(doc, "/");
+  router.navigate(`todo/${todoId}`);
+}
+
+function navigateToStat(doc) {
+  console.log(`Rendering todo screen for stat`);
+  const router = configureRouter(doc);
+  router.navigate(`stat`);
 }
 
 function notifyAboutTodoChange(doc) {
@@ -86,6 +93,10 @@ function todoListActionHandler(doc, event) {
       notifyAboutDeletedTodo(doc);
       break;
 
+    case "stat":
+      console.log(`Processing stat action`);
+      break;
+
     default:
       console.log("Panic! Unknown Action.");
   }
@@ -96,7 +107,8 @@ let boundClearFormHandler = null;
 let boundTodoListActionHandler = null;
 let boundUpdateTotalTodoCount = null;
 let boundUpdateTodoList = null;
-let boundRenderTodo = null;
+let boundNavigateTodo = null;
+let boundNavigateToStat = null;
 
 export function getListEventHandlers(doc) {
   boundAddTodoHandler =
@@ -123,8 +135,15 @@ export function getListEventHandlers(doc) {
       ? boundUpdateTodoList
       : updateTodoList.bind(null, doc);
 
-  boundRenderTodo =
-    boundRenderTodo !== null ? boundRenderTodo : renderTodo.bind(null, doc);
+  boundNavigateTodo =
+    boundNavigateTodo !== null
+      ? boundNavigateTodo
+      : navigateToTodo.bind(null, doc);
+
+  boundNavigateToStat =
+    boundNavigateToStat !== null
+      ? boundNavigateToStat
+      : navigateToStat.bind(null, doc);
 
   return [
     {
@@ -175,7 +194,12 @@ export function getListEventHandlers(doc) {
     {
       element: doc,
       eventName: "todo-item-shown",
-      handler: boundRenderTodo,
+      handler: boundNavigateTodo,
+    },
+    {
+      elementId: "stat-link",
+      eventName: "click",
+      handler: boundNavigateToStat,
     },
   ];
 }

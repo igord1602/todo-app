@@ -49,8 +49,9 @@ body {
   border-radius: 3px;
 }
 
-.list-filter-container{
+.list-filter-container a{
   color:  rgb(0, 174, 255);
+  text-decoration: none;
 }
 
 .empty-list {
@@ -232,3 +233,18 @@ body {
   background-color: greenyellow;
   box-shadow: 2px 0px 5px 4px greenyellow;
 }
+
+.title-statistics {
+  color:  rgb(0, 174, 255);
+}
+
+.all-stats {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  color: rgb(223, 30, 30);
+}
+
+
+
+
