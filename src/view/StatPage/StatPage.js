@@ -36,7 +36,6 @@ export default function renderStatPage(doc) {
   backToListButton.innerHTML = "Back To List";
   backToListButton.addEventListener("click", (e) => {
     e.preventDefault();
-
     const router = configureRouter(doc, "/");
     router.navigate("/");
   });

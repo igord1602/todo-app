@@ -4,10 +4,10 @@ import todoStorage from "../model/todoStorage.js";
 import renderTodoList from "../view/todoListPage/todoList.js";
 import configureRouter from "../routerConfig.js";
 
-function addTodoHandler(doc) {
+async function addTodoHandler(doc) {
   console.log("Add button clicked");
   const todoTextInput = getTodoInput(doc);
-  todoStorage.createTodo(todoTextInput.value);
+  await todoStorage.createTodo(todoTextInput.value);
 
   const todoItemCreated = new Event("todo-item-created");
   doc.dispatchEvent(todoItemCreated);
@@ -26,10 +26,10 @@ function updateTotalTodoCount(doc) {
   h2.innerHTML = `${todoStorage.totalTodoCount()}`;
 }
 
-function updateTodoList(doc) {
+async function updateTodoList(doc) {
   console.log("Updating Todo List");
 
-  const allTodo = todoStorage.getAllTodo();
+  const allTodo = await todoStorage.getAllTodo();
   renderTodoList(doc, allTodo);
 }
 
@@ -63,7 +63,7 @@ function notifyAboutTodoView(doc, todoId) {
   doc.dispatchEvent(todoItemShown);
 }
 
-function todoListActionHandler(doc, event) {
+async function todoListActionHandler(doc, event) {
   const actionName = event.target.dataset["action"];
   const todoId = event.target.dataset["id"];
 
@@ -74,22 +74,22 @@ function todoListActionHandler(doc, event) {
       break;
     case "postpone":
       console.log(`Processing postpone action for id: ${todoId}`);
-      todoStorage.postponeById(todoId);
+      await todoStorage.postponeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "resume":
       console.log(`Processing resume action for id: ${todoId}`);
-      todoStorage.resumeById(todoId);
+      await todoStorage.resumeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "done":
       console.log(`Processing done action for id: ${todoId}`);
-      todoStorage.completeById(todoId);
+      await todoStorage.completeById(todoId);
       notifyAboutTodoChange(doc);
       break;
     case "delete":
       console.log(`Processing delete action for id: ${todoId}`);
-      todoStorage.deleteById(todoId);
+      await todoStorage.deleteById(todoId);
       notifyAboutDeletedTodo(doc);
       break;
 

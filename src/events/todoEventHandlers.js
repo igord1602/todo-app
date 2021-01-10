@@ -9,10 +9,10 @@ function renderStatScreen(doc, event) {
   renderStatPage(doc, todoStorage.getTodoById(todoId));
 }
 
-function renderTodoScreen(doc, event) {
+async function renderTodoScreen(doc, event) {
   const todoId = event.detail.todoId;
   console.log(`Rendering todo screen for todo: ${todoId}`);
-  renderTodoPage(doc, todoStorage.getTodoById(todoId));
+  renderTodoPage(doc, await todoStorage.getTodoById(todoId));
 }
 
 function navigateToListPage(doc) {
@@ -33,7 +33,7 @@ function notifyAboutBackToListView(doc) {
   doc.dispatchEvent(backToList);
 }
 
-function todoListActionHandler(doc, event) {
+async function todoListActionHandler(doc, event) {
   const actionName = event.target.dataset["action"];
   const todoId = event.target.dataset["id"];
 
@@ -44,22 +44,22 @@ function todoListActionHandler(doc, event) {
       break;
     case "postpone":
       console.log(`Processing postpone action for id: ${todoId}`);
-      todoStorage.postponeById(todoId);
+      await todoStorage.postponeById(todoId);
       notifyAboutTodoChange(doc, todoId);
       break;
     case "resume":
       console.log(`Processing resume action for id: ${todoId}`);
-      todoStorage.resumeById(todoId);
+      await todoStorage.resumeById(todoId);
       notifyAboutTodoChange(doc, todoId);
       break;
     case "done":
       console.log(`Processing done action for id: ${todoId}`);
-      todoStorage.completeById(todoId);
+      await todoStorage.completeById(todoId);
       notifyAboutTodoChange(doc, todoId);
       break;
     case "delete":
       console.log(`Processing delete action for id: ${todoId}`);
-      todoStorage.deleteById(todoId);
+      await todoStorage.deleteById(todoId);
       notifyAboutBackToListView(doc);
       break;
 

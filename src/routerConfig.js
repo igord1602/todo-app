@@ -16,21 +16,27 @@ export default (doc, appRootPath) => {
 
   router = new Router([], "history", appRootPath);
 
-  router.add(/^\/$/, () => {
+  router.add(/^\/$/, async () => {
     console.log("=> Navigating to page");
-    renderTodoListPage(doc, todoStorage.getAllTodo());
+    renderTodoListPage(doc, await todoStorage.getAllTodo());
   });
 
-  router.add(/^todo\/(.*)$/, (todoId) => {
+  router.add(/^todo\/(.*)$/, async (todoId) => {
     const parsedTodoId = parseInt(todoId);
     console.log(`=> Navigating to todo page with id: ${parsedTodoId}`);
-    renderTodoPage(doc, todoStorage.getTodoById(parsedTodoId));
+    renderTodoPage(doc, await todoStorage.getTodoById(parsedTodoId));
   });
 
   router.add(/^stat$/, () => {
-    console.log("=> Navigating to report page");
+    console.log("=> Navigating to stat page");
     renderStatPage(doc);
   });
+
+  router.add(/^report$/, () => {
+    console.log("=> Navigating to report page");
+  });
+
+  router.config({ mode: "history", root: "/" });
 
   router.listen();
 
