@@ -7,7 +7,7 @@ class TodoStorage {
     this.todoCount = 0;
     this.todoPosponed = 0;
     this.todoDone = 0;
-    this.todoDeleted = 0;
+    this.todoinProcess = 0;
   }
 
   convertToViewDto(todoDto) {
@@ -62,8 +62,8 @@ class TodoStorage {
     return this.todoDone;
   }
 
-  totalTodoDeleted() {
-    return this.todoDeleted;
+  totalTodoinProcess() {
+    return this.todoinProcess;
   }
 
   async getTodoDtoById(id) {
@@ -107,8 +107,6 @@ class TodoStorage {
   async postponeById(id) {
     const todo = this.convertToTodo(this.getTodoDtoById(id));
     todo.postpone();
-    this.todoPosponed += 1;
-    this.todoResumed -= 1;
     const patch = { state: todo.state };
     return await this.patchTodo(id, patch);
   }
@@ -116,7 +114,6 @@ class TodoStorage {
   async resumeById(id) {
     const todo = this.convertToTodo(this.getTodoDtoById(id));
     todo.resume();
-    this.todoPosponed -= 1;
     const patch = { state: todo.state };
     return await this.patchTodo(id, patch);
   }
@@ -124,8 +121,6 @@ class TodoStorage {
   async completeById(id) {
     const todo = this.convertToTodo(this.getTodoDtoById(id));
     todo.done();
-    this.todoDone += 1;
-    this.todoDeleted += 1;
     const patch = {
       state: todo.state,
       dateCompleted: todo.dateCompleted,
@@ -161,6 +156,18 @@ class TodoStorage {
     const returnedDto = await allTodoResponse.json();
 
     this.todoCount = returnedDto.length;
+
+    //this.todoDone = returnedDto.filter((todo) => todo.state === "done").length;
+
+    this.todoPosponed = 0;
+    this.todoDone = 0;
+    this.todoinProcess = 0;
+
+    returnedDto.forEach((todo) => {
+      if (todo.state === "postponed") this.todoPosponed += 1;
+      if (todo.state === "done") this.todoDone += 1;
+      if (todo.state === "in-process") this.todoinProcess += 1;
+    });
 
     return returnedDto.map((dto) => this.convertToViewDto(dto));
   }

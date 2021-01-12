@@ -30,7 +30,7 @@ export default function renderStatPage(doc) {
   done.innerHTML = `ToDOs Done: ${todoStorage.todoDone}`;
 
   const deleted = createElement(doc, "span", "deleted-info info");
-  deleted.innerHTML = `ToDOs Deleted: ${todoStorage.todoDeleted}`;
+  deleted.innerHTML = `ToDOs in-process: ${todoStorage.todoinProcess}`;
 
   const backToListButton = createElement(doc, "button", "back-to-list-button");
   backToListButton.innerHTML = "Back To List";
